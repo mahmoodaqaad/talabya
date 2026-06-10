@@ -66,3 +66,19 @@ model Order {
   customer Customers @relation(fields: [CustomerId], references: [id], onDelete: Cascade)
   captain  Captain?  @relation(fields: [captainId], references: [id], onDelete: Cascade)
 }
+
+model Expense {
+  id        String   @id @default(cuid())
+  title     String
+  amount    Float
+  createdAt DateTime @default(now())
+}
+
+model PayoutArchive {
+  id               String   @id @default(cuid())
+  mahmoudPaid      Float
+  raneenPaid       Float
+  majdPaid         Float
+  totalDistributed Float
+  createdAt        DateTime @default(now())
+}

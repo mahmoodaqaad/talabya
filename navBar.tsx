@@ -13,7 +13,7 @@ const NavBar = () => {
                     {/* <RiSideBarLine /> */}
 
                     <div>
-                        <div className='flex items-center gap-6 pe-3'>
+                        {/* <div className='flex items-center gap-6 pe-3'>
 
                             <FiUser className='text-3xl cursor-pointer hover:text-orange-400 transition-all' />
                             <div className='relative'>
@@ -22,7 +22,7 @@ const NavBar = () => {
                             
                             <span className='absolute -top-2 -right-1 bg-red-500 text-white text-sm font-bold rounded-full w-5 h-5 flex items-center justify-center'>5</span>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

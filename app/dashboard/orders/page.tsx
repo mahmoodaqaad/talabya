@@ -316,6 +316,87 @@ export default function OrdersPage() {
         confirmText={modal.type === "confirm" ? "تأكيد الحذف" : "حسناً"}
         cancelText="إلغاء"
       />
+
+      {/* ====== جدول الطلبيات غير المدفوعة ====== */}
+      {!loading && (() => {
+        const unpaidOrders = orders.filter(o => !o.clientPaid && o.status === "تم التوصيل");
+        const totalPending = unpaidOrders.reduce((sum, o) => sum + (parseFloat(o.price || "0") || 0), 0);
+
+        if (unpaidOrders.length === 0) return null;
+
+        return (
+          <div className="mt-8 bg-zinc-900 border border-amber-500/30 rounded-2xl shadow-2xl overflow-hidden">
+            <div className="p-4 bg-amber-500/10 border-b border-amber-500/20 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <span className="w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse" />
+                <div>
+                  <h2 className="text-white font-black text-base">⚠️ طلبيات مكتملة — لم يتم استلام المبلغ بعد</h2>
+                  <p className="text-amber-400/70 text-xs mt-0.5">{unpaidOrders.length} طلبية بانتظار تسليم المبلغ من صاحب الطلب</p>
+                </div>
+              </div>
+              <div className="bg-amber-500/20 border border-amber-500/30 rounded-xl px-4 py-2 text-left">
+                <p className="text-amber-300 text-xs font-bold">إجمالي المبالغ المعلقة</p>
+                <p className="text-amber-400 text-2xl font-black font-mono">{totalPending.toFixed(0)} ₪</p>
+              </div>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="min-w-full text-right border-collapse">
+                <thead className="bg-zinc-950 text-zinc-400 text-xs font-bold border-b border-zinc-800">
+                  <tr>
+                    <th className="px-4 py-3">محتوى الطلب</th>
+                    <th className="px-4 py-3">المسار</th>
+                    <th className="px-4 py-3">العميل / المتجر</th>
+                    <th className="px-4 py-3">الكابتن</th>
+                    <th className="px-4 py-3">التاريخ</th>
+                    <th className="px-4 py-3 text-center">المبلغ المعلق</th>
+                    <th className="px-4 py-3 text-center">تحديث الاستلام</th>
+                  </tr>
+                </thead>
+                <tbody className="text-sm text-zinc-200 divide-y divide-zinc-800/50">
+                  {unpaidOrders.map((order) => (
+                    <tr key={order.id} className="hover:bg-amber-500/5 transition-colors border-r-2 border-r-amber-500/40">
+                      <td className="px-4 py-3.5 font-semibold text-zinc-100 max-w-[180px] truncate">{order.content}</td>
+                      <td className="px-4 py-3.5 text-xs text-zinc-300 whitespace-nowrap">
+                        <span className="text-white font-medium">{order.to}</span>
+                        <span className="mx-1 text-orange-500">➔</span>
+                        <span className="text-zinc-400">{order.from}</span>
+                      </td>
+                      <td className="px-4 py-3.5 text-zinc-300 whitespace-nowrap">{order.customer?.name || "—"}</td>
+                      <td className="px-4 py-3.5 whitespace-nowrap">
+                        <span className="px-2.5 py-0.5 text-xs font-bold rounded-md bg-zinc-800 text-zinc-300 border border-zinc-700">
+                          {order.captain?.name || "غير معين"}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3.5 text-zinc-400 text-xs whitespace-nowrap">
+                        {new Date(order.createdAt).toLocaleDateString("ar-EG")}
+                      </td>
+                      <td className="px-4 py-3.5 text-center">
+                        <span className="text-amber-400 font-black font-mono text-base">
+                          {parseFloat(order.price || "0").toFixed(0)} ₪
+                        </span>
+                      </td>
+                      <td className="px-4 py-3.5 text-center">
+                        <button
+                          disabled={updatingClientPaidId === order.id}
+                          onClick={() => handleToggleClientPaid(order.id, order.clientPaid)}
+                          className="px-3 py-1.5 text-xs font-bold rounded-lg border transition-all inline-flex items-center gap-1.5 text-amber-400 bg-amber-500/10 border-amber-500/30 hover:bg-amber-500/25 cursor-pointer disabled:opacity-50"
+                        >
+                          {updatingClientPaidId === order.id ? (
+                            <><FiRefreshCw className="animate-spin" /><span>جاري...</span></>
+                          ) : (
+                            "✓ تأكيد الاستلام"
+                          )}
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }

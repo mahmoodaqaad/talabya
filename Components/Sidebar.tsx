@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import { FiHome, FiShoppingBag, FiUserCheck, FiUsers, FiMap, FiBarChart2, FiSettings, FiPlus } from 'react-icons/fi'
+import { FiHome, FiShoppingBag, FiUserCheck, FiUsers, FiMap, FiBarChart2, FiSettings, FiPlus, FiDollarSign } from 'react-icons/fi'
 
 
 
@@ -43,6 +43,10 @@ const Sidebar = () => {
           <Link href="/dashboard/customers/add" className='flex items-center mb-4 cursor-pointer hover:text-orange-400'>
             <FiPlus className='me-3 text-xl' />
             <p>اضافة عميل</p>
+          </Link>
+          <Link href="/dashboard/financials" className='flex items-center mb-4 cursor-pointer hover:text-orange-400'>
+            <FiDollarSign className='me-3 text-xl' />
+            <p>المالية</p>
           </Link>
           <Link href="/dashboard/maps" className='flex items-center mb-4 cursor-pointer hover:text-orange-400'>
             <FiMap className='me-3 text-xl' />
