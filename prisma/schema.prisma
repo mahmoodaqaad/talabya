@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+  address   String?
+  phone     String?
+  Role      String   @default("Admin")
+  // Orders   Order[]
+}
+
+model Captain {
+  id        String   @id @default(cuid())
+  name      String
+  email     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt()
+  Area      String?
+  bike      String?
+  phone     String?
+  address   String?
+  notes     String?
+  Orders    Order[]
+}
+
+model Customers {
+  id             String   @id @default(cuid())
+  name           String
+  email          String?
+  isStoreOwner   Boolean  @default(false)
+  StoreName      String?  @unique
+  orderCount     Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt()
+  address        String?
+  phone          String?
+  notes          String?
+  customerOrders Order[]
+}
+
+model Order {
+  id          String   @id @default(cuid())
+  from        String
+  to          String
+  captainId   String
+  content     String
+  notes       String
+  CustomerId  String
+  price       String?
+  status      String   @default("pending")
+  clientPaid  Boolean  @default(false)
+  captainPaid Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt()
+
+  customer Customers @relation(fields: [CustomerId], references: [id], onDelete: Cascade)
+  captain  Captain?  @relation(fields: [captainId], references: [id], onDelete: Cascade)
+}
