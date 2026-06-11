@@ -20,7 +20,7 @@ export const GET = async (request: NextRequest, { params }: { params: { id: stri
             include: { customer: true, captain: true }
         });
 
-        if (!order) return NextResponse.json({ message: "الطلب غير موجود" }, { status: 404 });
+        if (!order) return NextResponse.json({ message: "الطلب غير موجود", id }, { status: 404 });
         return NextResponse.json(order);
     } catch (error) {
         console.error(error);
@@ -42,7 +42,9 @@ export const PATCH = async (request: NextRequest, { params }: { params: { id: st
             from, to, captainId, content, notes, status, price, createdAt,
             customerName, customerPhone,
             captainName, captainPhone,
-            clientPaid, captainPaid
+            clientPaid, captainPaid, captainPrice,
+            
+
         } = body;
 
         const updatedData = await prisma.$transaction(async (tx) => {
@@ -59,7 +61,8 @@ export const PATCH = async (request: NextRequest, { params }: { params: { id: st
                     ...(price !== undefined && { price }),
                     ...(createdAt && { createdAt: new Date(createdAt) }),
                     ...(clientPaid !== undefined && { clientPaid }),
-                    ...(captainPaid !== undefined && { captainPaid })
+                    ...(captainPaid !== undefined && { captainPaid }),
+                    ...(captainId && { captainPrice: Number(captainPrice) || Number(price) * 0.65 })
                 }
             });
 

@@ -21,6 +21,7 @@ type Order = {
     clientPaid: boolean;
     customer: { name: string; StoreName: string | null };
     captain: { name: string } | null;
+    captainPrice: number;
 }
 
 type Captain = {
@@ -92,7 +93,7 @@ const Dashboard = () => {
         const price = parseFloat(order.price || '0')
         if (!isNaN(price) && price > 0) {
             totalRevenue += price
-            const captainShare = Math.round(price * CAPTAIN_RATIO)
+            const captainShare =order.captainPrice|| Math.round(price * CAPTAIN_RATIO)
             totalCaptainDues += captainShare
             totalAdminBox += price - captainShare
         }

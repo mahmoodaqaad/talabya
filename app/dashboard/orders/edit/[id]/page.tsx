@@ -4,7 +4,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { FiArrowRight, FiBox, FiFileText, FiMapPin, FiNavigation, FiSave, FiTruck, FiDollarSign, FiCalendar, FiActivity } from "react-icons/fi";
+import { FiArrowRight, FiBox, FiFileText, FiMapPin, FiNavigation, FiSave, FiTruck, FiDollarSign, FiCalendar, FiActivity, FiPlayCircle } from "react-icons/fi";
 
 const getAxiosMessage = (error: unknown, fallback: string) =>
     axios.isAxiosError<{ message?: string }>(error) ? error.response?.data?.message || fallback : fallback;
@@ -18,7 +18,7 @@ export default function EditOrderPage() {
     const [allCaptains, setAllCaptains] = useState<{ id: string; name: string }[]>([]);
 
     const [form, setForm] = useState({
-        from: "", to: "", captainId: "", content: "", notes: "", status: "", price: "", createdAt: "", clientPaid: false, captainPaid: false
+        from: "", to: "", captainId: "", content: "", notes: "", status: "", price: "", createdAt: "", clientPaid: false, captainPaid: false, captainPrice: 0
     });
 
     useEffect(() => {
@@ -34,12 +34,14 @@ export default function EditOrderPage() {
                     from: o.from, to: o.to, captainId: o.captainId, content: o.content, notes: o.notes, status: o.status, price: o.price.toString(),
                     createdAt: o.createdAt ? new Date(o.createdAt).toISOString().slice(0, 16) : "",
                     clientPaid: o.clientPaid || false,
-                    captainPaid: o.captainPaid || false
+                    captainPaid: o.captainPaid || false,
+                    captainPrice: o.captainPrice
                 });
+
             } catch (error: unknown) {
                 setMessage({ type: "error", text: getAxiosMessage(error, "فشل جلب بيانات الطلب") });
             } finally {
-                
+
                 setLoading(false);
             }
         };
@@ -132,12 +134,20 @@ export default function EditOrderPage() {
                     <Field icon={<FiNavigation />} label="مكان التسليم (إلى)" required>
                         <input required className="w-full bg-zinc-950 border border-zinc-800 rounded-xl pr-12 pl-4 py-3 text-sm text-white" value={form.to} onChange={(e) => setForm({ ...form, to: e.target.value })} />
                     </Field>
-                    <Field icon={<FiTruck />} label="الكابتن المسؤول" required wide>
+                    <Field icon={<FiTruck />} label="الكابتن المسؤول" required >
                         <select required className="w-full bg-zinc-950 border border-zinc-800 rounded-xl pr-12 pl-4 py-3 text-sm text-white appearance-none" value={form.captainId} onChange={(e) => setForm({ ...form, captainId: e.target.value })}>
                             {allCaptains.map((cap) => <option key={cap.id} value={cap.id}>{cap.name}</option>)}
                         </select>
                     </Field>
-
+                    <Field icon={<FiDollarSign />} label="سعر الكابتن" required>
+                        <input type="number" required className="w-full bg-zinc-950 border border-zinc-800 rounded-xl pr-12 pl-4 py-3 text-sm text-white" value={form.captainPrice} onChange={(e) => setForm({ ...form, captainPrice: e.target.value })} />
+                    </Field>
+                    <Field icon={<FiMapPin />} label="مكان الاستلام (من)" required>
+                        <input readOnly required className="w-full bg-zinc-950 border border-zinc-800 rounded-xl pr-12 pl-4 py-3 text-sm text-white" value={form.from} onChange={(e) => setForm({ ...form, from: e.target.value })} />
+                    </Field>
+                    <Field icon={<FiNavigation />} label="مكان التسليم (إلى)" required>
+                        <input readOnly required className="w-full bg-zinc-950 border border-zinc-800 rounded-xl pr-12 pl-4 py-3 text-sm text-white" value={form.to} onChange={(e) => setForm({ ...form, to: e.target.value })} />
+                    </Field>
                     {/* قسم الحسابات والدفع */}
                     <div className="flex flex-col gap-1.5 md:col-span-2 bg-zinc-950/40 p-4 rounded-2xl border border-zinc-800/80">
                         <label className="text-xs text-zinc-400 font-bold mb-1">الحسابات والدفع</label>
@@ -146,7 +156,7 @@ export default function EditOrderPage() {
                                 <input type="checkbox" checked={form.clientPaid} onChange={(e) => setForm({ ...form, clientPaid: e.target.checked })} className="w-5 h-5 rounded border-zinc-800 text-orange-500 focus:ring-orange-500 bg-zinc-950 accent-orange-500 cursor-pointer" />
                                 <span>وصلت الفلوس من صاحب الطلبية</span>
                             </label>
-                            
+
                             <label className="flex items-center gap-3 cursor-pointer select-none text-sm font-semibold text-zinc-200 bg-zinc-950/60 p-3 rounded-xl border border-zinc-800/50 hover:border-orange-500/50 transition-colors">
                                 <input type="checkbox" checked={form.captainPaid} onChange={(e) => setForm({ ...form, captainPaid: e.target.checked })} className="w-5 h-5 rounded border-zinc-800 text-orange-500 focus:ring-orange-500 bg-zinc-950 accent-orange-500 cursor-pointer" />
                                 <span>تم محاسبة الديلفري (الكابتن)</span>
@@ -157,6 +167,7 @@ export default function EditOrderPage() {
                         <textarea className="w-full bg-zinc-950 border border-zinc-800 rounded-xl pr-12 pl-4 py-3 text-sm text-white resize-none" rows={3} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} />
                     </Field>
                 </div>
+
 
                 <div className="flex justify-end border-t border-zinc-800/60 pt-5">
                     <button disabled={saving} className="bg-gradient-to-r from-orange-600 to-orange-500 text-white font-bold px-6 py-3 rounded-xl flex items-center gap-2 text-xs disabled:opacity-50 transition-all">

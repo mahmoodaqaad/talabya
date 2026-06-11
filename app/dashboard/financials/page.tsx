@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { FiActivity, FiAlertTriangle, FiDollarSign, FiPlusCircle, FiTrash2, FiTrendingUp } from "react-icons/fi";
+import { FiActivity, FiAlertTriangle, FiDollarSign,  FiTrash2, FiTrendingUp } from "react-icons/fi";
 import { RiLoader2Fill, RiWallet2Fill } from "react-icons/ri";
 
 type Order = {
@@ -16,6 +16,7 @@ type Order = {
   createdAt: string;
   customer?: { name: string; StoreName?: string | null } | null;
   captain?: { name: string } | null;
+  captainPrice:number;
 };
 
 type Expense = {
@@ -99,7 +100,7 @@ export default function FinancialsDashboard() {
       const price = parseFloat(o.price || "0") || 0;
       if (price > 0) {
         revenue += price;
-        const captainShare = Math.round(price * CAPTAIN_RATIO);
+        const captainShare = o.captainPrice||Math.round(price * CAPTAIN_RATIO);
         captainDues += captainShare;
         adminBox += price - captainShare;
       }
@@ -127,8 +128,8 @@ export default function FinancialsDashboard() {
   const totalReceivedAmount = receivedOrders.reduce((sum, o) => sum + (parseFloat(o.price || "0") || 0), 0);
   const captainUnpaidOrders = completedOrders.filter(o => !o.captainPaid);
   const captainPaidOrders = completedOrders.filter(o => o.captainPaid);
-  const captainUnpaidAmount = captainUnpaidOrders.reduce((sum, o) => sum + Math.round((parseFloat(o.price || "0") || 0) * CAPTAIN_RATIO), 0);
-  const captainPaidAmount = captainPaidOrders.reduce((sum, o) => sum + Math.round((parseFloat(o.price || "0") || 0) * CAPTAIN_RATIO), 0);
+  const captainUnpaidAmount = captainUnpaidOrders.reduce((sum, o) => sum + (Number(o.captainPrice)|| Math.round((parseFloat(o.price || "0") || 0)*CAPTAIN_RATIO)), 0);
+  const captainPaidAmount = captainPaidOrders.reduce((sum, o) => sum + (Number(o.captainPrice)||Math.round((parseFloat(o.price || "0") || 0) *CAPTAIN_RATIO)), 0);
 
   if (loading) {
     return (
@@ -336,7 +337,7 @@ export default function FinancialsDashboard() {
                   <tbody className="divide-y divide-gray-700">
                     {captainUnpaidOrders.map(order => {
                       const price = parseFloat(order.price || "0") || 0;
-                      const captainCut = Math.round(price * 0.65);
+                      const captainCut = order.captainPrice||Math.round(price * 0.65);
                       return (
                         <tr key={order.id} className="hover:bg-orange-900/10 transition-colors">
                           <td className="px-4 py-3 font-medium">{order.captain?.name || "—"}</td>

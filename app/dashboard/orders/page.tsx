@@ -220,13 +220,12 @@ export default function OrdersPage() {
                     <button
                       disabled={updatingClientPaidId === order.id}
                       onClick={() => handleToggleClientPaid(order.id, order.clientPaid)}
-                      className={`px-3 py-1.5 text-xs font-bold rounded-lg border transition-all inline-flex items-center gap-1.5 ${
-                        updatingClientPaidId === order.id
+                      className={`px-3 py-1.5 text-xs font-bold rounded-lg border transition-all inline-flex items-center gap-1.5 ${updatingClientPaidId === order.id
                           ? "text-zinc-400 bg-zinc-800 border-zinc-700 opacity-60 cursor-not-allowed"
                           : order.clientPaid
-                          ? "text-green-400 bg-green-500/10 border-green-500/20 hover:bg-green-500/20 cursor-pointer"
-                          : "text-red-400 bg-red-500/10 border-red-500/20 hover:bg-red-500/20 cursor-pointer"
-                      }`}
+                            ? "text-green-400 bg-green-500/10 border-green-500/20 hover:bg-green-500/20 cursor-pointer"
+                            : "text-red-400 bg-red-500/10 border-red-500/20 hover:bg-red-500/20 cursor-pointer"
+                        }`}
                     >
                       {updatingClientPaidId === order.id ? (
                         <>
@@ -244,13 +243,12 @@ export default function OrdersPage() {
                     <button
                       disabled={updatingCaptainPaidId === order.id}
                       onClick={() => handleToggleCaptainPaid(order.id, order.captainPaid)}
-                      className={`px-3 py-1.5 text-xs font-bold rounded-lg border transition-all inline-flex items-center gap-1.5 ${
-                        updatingCaptainPaidId === order.id
+                      className={`px-3 py-1.5 text-xs font-bold rounded-lg border transition-all inline-flex items-center gap-1.5 ${updatingCaptainPaidId === order.id
                           ? "text-zinc-400 bg-zinc-800 border-zinc-700 opacity-60 cursor-not-allowed"
                           : order.captainPaid
-                          ? "text-green-400 bg-green-500/10 border-green-500/20 hover:bg-green-500/20 cursor-pointer"
-                          : "text-red-400 bg-red-500/10 border-red-500/20 hover:bg-red-500/20 cursor-pointer"
-                      }`}
+                            ? "text-green-400 bg-green-500/10 border-green-500/20 hover:bg-green-500/20 cursor-pointer"
+                            : "text-red-400 bg-red-500/10 border-red-500/20 hover:bg-red-500/20 cursor-pointer"
+                        }`}
                     >
                       {updatingCaptainPaidId === order.id ? (
                         <>
@@ -290,6 +288,9 @@ export default function OrdersPage() {
 
                   {/* أزرار الإجراءات وتوجيه لصفحة التعديل الشاملة */}
                   <td className="px-4 py-4 whitespace-nowrap text-center flex items-center justify-center gap-2">
+
+                    <Link href={"/dashboard/orders/" + order.id} className="p-2 rounded-lg bg-blue-600 text-white hover:bg-blue-400 inline-flex items-center gap-1 font-semibold text-xs transition-colors">Info</Link>
+
                     <Link href={`/dashboard/orders/edit/${order.id}`} className="p-2 rounded-lg bg-zinc-800 text-zinc-300 hover:text-orange-400 inline-flex items-center gap-1 font-semibold text-xs transition-colors">
                       <FiEdit3 />
                       <span>تعديل</span>

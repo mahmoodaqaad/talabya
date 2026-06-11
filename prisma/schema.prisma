@@ -57,6 +57,7 @@ model Order {
   notes       String
   CustomerId  String
   price       String?
+  captainPrice Float?
   status      String   @default("pending")
   clientPaid  Boolean  @default(false)
   captainPaid Boolean  @default(false)

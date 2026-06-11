@@ -74,7 +74,7 @@ export const POST = async (request: NextRequest) => {
             price,
             customCreatedAt,
             clientPaid,
-            captainPaid
+            captainPaid,
         } = body;
 
         // التحقق من الحقول الإجبارية للطلب
@@ -119,6 +119,8 @@ export const POST = async (request: NextRequest) => {
                     status: status || "جاري التوصيل", // الحالة التشغيلية الافتراضية
                     clientPaid: clientPaid ?? false,
                     captainPaid: captainPaid ?? false,
+                    captainPrice:price*0.65,
+
                     // إذا حدد الأدمن تاريخاً مخصصاً (طلبية قديمة متأخرة) يتم حفظه، وإلا يسجل تاريخ اللحظة تلقائياً
                     ...(customCreatedAt && { createdAt: new Date(customCreatedAt) }),
                 },
