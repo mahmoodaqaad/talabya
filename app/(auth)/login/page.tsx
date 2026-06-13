@@ -7,27 +7,29 @@ import Link from 'next/link'
 import { FiMail, FiLock, FiLogIn } from 'react-icons/fi'
 import axios from 'axios'
 import Loading from '@/Components/loading'
+import { toast } from 'react-toastify'
+import { useRouter } from 'next/navigation'
 
 const Login = () => {
     const [form, setForm] = useState({
         email: '', password: ''
     })
     const [loading, setLoading] = useState(false)
-    
+const router=useRouter()
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
             setLoading(true)
             const res = await axios.post("/api/auth/login", form);
             console.log(res.data);
-
-        } catch (error) {
-            console.log(error);
-
+            router.push("/dashboard");
+        } catch (error: any) {
+            console.log(error.response);
+            toast.error(error.response.data.message || "Registration failed");
         }
         finally {
-            setLoading(false) 
-            
+            setLoading(false)
+
         }
     };
 
@@ -111,7 +113,7 @@ const Login = () => {
                         }
                     </button>
 
-                 
+
                 </form>
 
                 {/* الفوتر للتحويل لصفحة التسجيل */}

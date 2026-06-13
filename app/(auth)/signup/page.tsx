@@ -6,7 +6,9 @@ import { FiUser, FiMail, FiPhone, FiLock, FiUserPlus, FiMap } from 'react-icons/
 import axios from 'axios'
 import Loading from '@/Components/loading'
 import { toast } from 'react-toastify'
+import { useRouter } from 'next/navigation'
 const Register = () => {
+  const router=useRouter() 
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -26,7 +28,7 @@ const Register = () => {
 
       const res = await axios.post("/api/auth/register", form);
       console.log(res.data);
-
+router.push("/dashboard")
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error:any) {
       console.log(error.response);
