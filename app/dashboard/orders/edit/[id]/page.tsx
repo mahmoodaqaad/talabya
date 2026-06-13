@@ -164,17 +164,16 @@ export default function EditOrderPage() {
                     </Field>
 
                         {/* readonly  */}
-                    <div className="flex justify-center items-center">
-                        
-                    <Field icon={<FiDollarSign />} label="حصة محمود" required>
-                        <input disabled readOnly required className="w-full bg-zinc-950 border border-zinc-800 rounded-xl pr-12 pl-4 py-3 text-sm text-white" value={((Number(form.price) - Number(form.captainPrice)) * 0.40).toFixed(2)} />
-                    </Field>
-                    <Field icon={<FiDollarSign />} label="حصة رنين" required>
-                        <input disabled readOnly required className="w-full bg-zinc-950 border border-zinc-800 rounded-xl pr-12 pl-4 py-3 text-sm text-white" value={((Number(form.price) - Number(form.captainPrice)) * 0.40).toFixed(2)} />
-                    </Field>
-                    <Field icon={<FiDollarSign />} label="حصة مجد" required>
-                        <input disabled readOnly required className="w-full bg-zinc-950 border border-zinc-800 rounded-xl pr-12 pl-4 py-3 text-sm text-white"  value={((Number(form.price) - Number(form.captainPrice)) * 0.20).toFixed(2)}  />
-                    </Field>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:col-span-2 mt-4">
+                        <Field icon={<FiDollarSign />} label="حصة محمود" required>
+                            <input disabled readOnly required className="w-full bg-zinc-950 border border-zinc-800 rounded-xl pr-12 pl-4 py-3 text-sm text-white" value={((Number(form.price) - Number(form.captainPrice)) * 0.40).toFixed(2)} />
+                        </Field>
+                        <Field icon={<FiDollarSign />} label="حصة رنين" required>
+                            <input disabled readOnly required className="w-full bg-zinc-950 border border-zinc-800 rounded-xl pr-12 pl-4 py-3 text-sm text-white" value={((Number(form.price) - Number(form.captainPrice)) * 0.40).toFixed(2)} />
+                        </Field>
+                        <Field icon={<FiDollarSign />} label="حصة مجد" required>
+                            <input disabled readOnly required className="w-full bg-zinc-950 border border-zinc-800 rounded-xl pr-12 pl-4 py-3 text-sm text-white"  value={((Number(form.price) - Number(form.captainPrice)) * 0.20).toFixed(2)}  />
+                        </Field>
                     </div>
                 </div>
 

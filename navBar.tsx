@@ -1,13 +1,17 @@
 import React from 'react'
 import { FiBell, FiUser } from 'react-icons/fi'
 import { RiSideBarLine, RiSideBarFill } from 'react-icons/ri'
-const NavBar = () => {
+
+const NavBar = ({ toggleSidebar }: { toggleSidebar?: () => void }) => {
     return (
         <div className='p-1'>
             <div className='bg-zinc-900 text-orange-200 text-2xl font-extrabold uppercase px-1 w-full p-4 rounded-xl'>
                 <div className='flex justify-between items-center'>
 
-                    <p className='p-2 text-3xl cursor-pointer w-fit transition-all hover:text-orange-400'>
+                    <p 
+                        onClick={toggleSidebar}
+                        className='p-2 text-3xl cursor-pointer w-fit transition-all hover:text-orange-400 lg:hidden'
+                    >
                         <RiSideBarFill />
                     </p>
                     {/* <RiSideBarLine /> */}

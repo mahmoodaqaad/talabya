@@ -180,7 +180,8 @@ console.log("realNetProfit ",realNetProfit);
             <div className="border-b border-gray-700 bg-gray-900 px-6 py-4">
               <h2 className="text-lg font-bold text-white">توزيع حصص الشركاء</h2>
             </div>
-            <table className="w-full text-right text-sm">
+            <div className="overflow-x-auto">
+              <table className="min-w-full text-right text-sm">
               <thead className="bg-gray-900 text-gray-400">
                 <tr>
                   <th className="px-6 py-4 font-medium">الشريك</th>
@@ -200,6 +201,7 @@ console.log("realNetProfit ",realNetProfit);
                 ))}
               </tbody>
             </table>
+            </div>
           </div>
 
           <div className="lg:col-span-1 flex flex-col gap-6">

@@ -33,10 +33,10 @@ const OrderPage = () => {
     const majd = officeShare * 0.2;
 
     return (
-        <div className="p-6 max-w-2xl mx-auto bg-gray-900 text-white rounded-xl">
-            <h1 className="text-2xl font-bold mb-4">تفاصيل الطلبية: #{order.id.slice(-5)}</h1>
+        <div className="p-4 sm:p-6 max-w-2xl mx-auto bg-gray-900 text-white rounded-xl">
+            <h1 className="text-xl sm:text-2xl font-bold mb-4">تفاصيل الطلبية: #{order.id.slice(-5)}</h1>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <InfoCard label="محتوى الطلب" value={order.content} />
                 <InfoCard label="سعر الطلبية" value={`${price} ₪`} />
                 <InfoCard label="الكابتن" value={order.captain?.name} />
