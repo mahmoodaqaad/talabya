@@ -289,7 +289,6 @@ export default function OrdersPage() {
                   {/* أزرار الإجراءات وتوجيه لصفحة التعديل الشاملة */}
                   <td className="px-4 py-4 whitespace-nowrap text-center flex items-center justify-center gap-2">
 
-                    <Link href={"/dashboard/orders/" + order.id} className="p-2 rounded-lg bg-blue-600 text-white hover:bg-blue-400 inline-flex items-center gap-1 font-semibold text-xs transition-colors">Info</Link>
 
                     <Link href={`/dashboard/orders/edit/${order.id}`} className="p-2 rounded-lg bg-zinc-800 text-zinc-300 hover:text-orange-400 inline-flex items-center gap-1 font-semibold text-xs transition-colors">
                       <FiEdit3 />

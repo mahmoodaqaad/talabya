@@ -123,6 +123,7 @@ export default function FinancialsDashboard() {
   const mahmoudShare = realMahmoud;
   const raneenShare = realRaneen;
   const majdShare = realMajd;
+console.log("realNetProfit ",realNetProfit);
 
   const totalPendingAmount = pendingPaymentOrders.reduce((sum, o) => sum + (parseFloat(o.price || "0") || 0), 0);
   const totalReceivedAmount = receivedOrders.reduce((sum, o) => sum + (parseFloat(o.price || "0") || 0), 0);
@@ -167,7 +168,7 @@ export default function FinancialsDashboard() {
                 </div>
                 <div>
                   <p className="text-xs font-semibold text-gray-500 uppercase">{item.title}</p>
-                  <p className="text-2xl font-bold text-white">{item.val.toFixed(0)} ₪</p>
+                  <p className="text-2xl font-bold text-white">{item.val.toFixed(1)} ₪</p>
                 </div>
               </div>
             </div>

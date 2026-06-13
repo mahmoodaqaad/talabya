@@ -142,12 +142,8 @@ export default function EditOrderPage() {
                     <Field icon={<FiDollarSign />} label="سعر الكابتن" required>
                         <input type="number" required className="w-full bg-zinc-950 border border-zinc-800 rounded-xl pr-12 pl-4 py-3 text-sm text-white" value={form.captainPrice} onChange={(e) => setForm({ ...form, captainPrice: e.target.value })} />
                     </Field>
-                    <Field icon={<FiMapPin />} label="مكان الاستلام (من)" required>
-                        <input readOnly required className="w-full bg-zinc-950 border border-zinc-800 rounded-xl pr-12 pl-4 py-3 text-sm text-white" value={form.from} onChange={(e) => setForm({ ...form, from: e.target.value })} />
-                    </Field>
-                    <Field icon={<FiNavigation />} label="مكان التسليم (إلى)" required>
-                        <input readOnly required className="w-full bg-zinc-950 border border-zinc-800 rounded-xl pr-12 pl-4 py-3 text-sm text-white" value={form.to} onChange={(e) => setForm({ ...form, to: e.target.value })} />
-                    </Field>
+
+                
                     {/* قسم الحسابات والدفع */}
                     <div className="flex flex-col gap-1.5 md:col-span-2 bg-zinc-950/40 p-4 rounded-2xl border border-zinc-800/80">
                         <label className="text-xs text-zinc-400 font-bold mb-1">الحسابات والدفع</label>
@@ -166,6 +162,20 @@ export default function EditOrderPage() {
                     <Field icon={<FiFileText />} label="ملاحظات الطلب" wide textarea>
                         <textarea className="w-full bg-zinc-950 border border-zinc-800 rounded-xl pr-12 pl-4 py-3 text-sm text-white resize-none" rows={3} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} />
                     </Field>
+
+                        {/* readonly  */}
+                    <div className="flex justify-center items-center">
+                        
+                    <Field icon={<FiDollarSign />} label="حصة محمود" required>
+                        <input disabled readOnly required className="w-full bg-zinc-950 border border-zinc-800 rounded-xl pr-12 pl-4 py-3 text-sm text-white" value={((Number(form.price) - Number(form.captainPrice)) * 0.40).toFixed(2)} />
+                    </Field>
+                    <Field icon={<FiDollarSign />} label="حصة رنين" required>
+                        <input disabled readOnly required className="w-full bg-zinc-950 border border-zinc-800 rounded-xl pr-12 pl-4 py-3 text-sm text-white" value={((Number(form.price) - Number(form.captainPrice)) * 0.40).toFixed(2)} />
+                    </Field>
+                    <Field icon={<FiDollarSign />} label="حصة مجد" required>
+                        <input disabled readOnly required className="w-full bg-zinc-950 border border-zinc-800 rounded-xl pr-12 pl-4 py-3 text-sm text-white"  value={((Number(form.price) - Number(form.captainPrice)) * 0.20).toFixed(2)}  />
+                    </Field>
+                    </div>
                 </div>
 
 
